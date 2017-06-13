@@ -27,7 +27,7 @@ defmodule Addict.AddictController do
   Renders registration layout
   """
   def register(%{method: "GET"} = conn, _) do
-    csrf_token = generate_csrf_token
+    csrf_token = generate_csrf_token()
     conn
     |> put_addict_layout
     |> render("register.html", csrf_token: csrf_token)
@@ -54,9 +54,9 @@ defmodule Addict.AddictController do
   Renders login layout
   """
   def login(%{method: "GET"} = conn, _) do
-    csrf_token = generate_csrf_token
+    csrf_token = generate_csrf_token()
     conn
-    |> put_addict_layout
+    |> put_addict_layout()
     |> render("login.html", csrf_token: csrf_token)
   end
 
@@ -90,7 +90,7 @@ defmodule Addict.AddictController do
   Renders Password Recovery layout
   """
   def recover_password(%{method: "GET"} = conn, _) do
-    csrf_token = generate_csrf_token
+    csrf_token = generate_csrf_token()
     conn
     |> put_addict_layout
     |> render("recover_password.html", csrf_token: csrf_token)
@@ -113,11 +113,11 @@ defmodule Addict.AddictController do
   Renders Password Reset layout
   """
   def reset_password(%{method: "GET"} = conn, params) do
-    csrf_token = generate_csrf_token
+    csrf_token = generate_csrf_token()
     token = params["token"]
     signature = params["signature"]
     conn
-    |> put_addict_layout
+    |> put_addict_layout()
     |> render("reset_password.html", token: token, signature: signature, csrf_token: csrf_token)
   end
 
@@ -162,8 +162,8 @@ defmodule Addict.AddictController do
   end
 
   defp parse(user_params) do
-    if user_params[schema_name_string] != nil do
-      user_params[schema_name_string]
+    if user_params[schema_name_string()] != nil do
+      user_params[schema_name_string()]
     else
       user_params
     end

@@ -22,11 +22,10 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
       Mix.shell.error "[x] Please make sure your Addict configuration exists first. Generate it via mix:"
       Mix.shell.error "[x] mix addict.generate.configs"
     else
-      base_module = guess_application_name
       Mix.shell.info "[o] Generating Addict boilerplate"
 
-      create_addict_templates
-      create_addict_view
+      create_addict_templates()
+      create_addict_view()
     end
 
     Mix.shell.info "[o] Done!"
@@ -35,25 +34,25 @@ defmodule Mix.Tasks.Addict.Generate.Boilerplate do
   defp create_addict_templates do
     create_file Path.join(["web", "templates", "addict", "addict.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                template_text
+                template_text()
     create_file Path.join(["web", "templates", "addict", "login.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                login_text
+                login_text()
     create_file Path.join(["web", "templates", "addict", "register.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                register_text
+                register_text()
     create_file Path.join(["web", "templates", "addict", "recover_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                recover_password_text
+                recover_password_text()
     create_file Path.join(["web", "templates", "addict", "reset_password.html.eex"])
                 |> Path.relative_to(Mix.Project.app_path),
-                reset_password_text
+                reset_password_text()
   end
 
   defp create_addict_view do
     view_file = Path.join(["web", "views", "addict_view.ex"])
                 |> Path.relative_to(Mix.Project.app_path)
-    create_file view_file, view_template(base_route_helper: (guess_application_name <> ".Router.Helpers"))
+    create_file view_file, view_template(base_route_helper: (guess_application_name() <> ".Router.Helpers"))
   end
 
   defp guess_application_name do
